@@ -42,25 +42,29 @@
             <thead>
                 <tr>
                     <th scope="col">Nom du produit</th>
-                    <th scope="col">Prix unitaire(Hors Taxe)</th>
-                    <th scope="col">Nombre d'article</th>
+                    <th scope="col">Prix (HT)</th>
+                    <th scope="col">TVA</th>
+                    <th scope="col">Quantité</th>
+                    <th scope="col">Prix (TTC)</th>
                 </tr>
             </thead>
             <tbody>
             <?php 
                 $call_facture = call_facture_info($facture['id']);
+                $total = 0;
                 foreach($call_facture AS $cf):
+                    $total = $total + $cf['productTTC'];
             ?>
                 <tr>
                     <td><?= $cf['productName']; ?></td>
-                    <td><?= $cf['productPrice']; ?> euros</td>
-                    <td><?= $cf['productNumber']; ?></td>
+                    <td><?= $cf['productPrice']; ?> €</td>
+                    <td><?= $cf['productTVA']; ?> %</td>
+                    <td><?= $cf['productNumber'].' '.$cf['productUnite'] ?></td>
+                    <td><?= $cf['productTTC']; ?> €</td>
                 </tr>
             <?php endforeach; ?>
             </tbody>
         </table>
-        <?= 
-            var_dump($call_facture);
-        ?>
+        <h2>Total: <?= $total; ?> €</h2>
     </div>
 </div>

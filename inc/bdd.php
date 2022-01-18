@@ -233,7 +233,10 @@ function call_facture_info(int $id){
     $request = $bdd->prepare('SELECT 
     produits.name AS productName, 
     produits.price AS productPrice,
-    facture_produit.nombre AS productNumber
+    produits.unite AS productUnite,
+    produits.tva AS productTVA,
+    facture_produit.nombre AS productNumber,
+    facture_produit.nombre * (produits.price + (produits.price * produits.tva) / 100) AS productTTC
     FROM factures, produits, facture_produit 
     WHERE factures.id = :id AND facture_produit.id_facture = :id AND produits.id = facture_produit.id_produit');
 
