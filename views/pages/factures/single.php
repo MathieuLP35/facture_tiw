@@ -46,6 +46,7 @@
                     <th scope="col">TVA</th>
                     <th scope="col">Quantité</th>
                     <th scope="col">Prix (TTC)</th>
+                    <th scope="col">Action</th>
                 </tr>
             </thead>
             <tbody>
@@ -61,6 +62,10 @@
                     <td><?= $cf['productTVA']; ?> %</td>
                     <td><?= $cf['productNumber'].' '.$cf['productUnite'] ?></td>
                     <td><?= $cf['productTTC']; ?> €</td>
+                    <td> 
+                        <!-- <a href="?data=facture&action=view&fid=<?= $facture['id']; ?>&cid=<?= $client['id']; ?>" class="btn btn-warning">Voir</a> -->
+                        <a href="?data=facture&action=deleteProd&id=<?= $cf['facture_productID']; ?>&fid=<?= $cf['factureID']; ?>" class="btn btn-danger">Supprimer</a>
+                    </td>
                 </tr>
             <?php endforeach; ?>
             </tbody>

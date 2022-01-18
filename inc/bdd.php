@@ -225,16 +225,30 @@ function addProduct_facture(int $facture, int $produit, float $qty){
     ]);
 }
 
+// Suppresion d'un produit d'une facture
+function deleteProduct_facture(int $id, int $fid){
+    $bdd = bdd_connect();
+    $request = $bdd->prepare('DELETE FROM facture_produit WHERE id = :id AND id_facture = :fid');
+    $request->execute([
+        ':id' => $id,
+        ':fid' => $fid,
+    ]);
+}
+
 
 // ----------------------------- Appel Facture -----------------------------
 
 function call_facture_info(int $id){
     $bdd = bdd_connect();
     $request = $bdd->prepare('SELECT 
+    produits.id AS productID,
     produits.name AS productName, 
     produits.price AS productPrice,
     produits.unite AS productUnite,
     produits.tva AS productTVA,
+    facture_produit.id AS facture_productID,
+    facture_produit.id_produit AS productID,
+    facture_produit.id_facture AS factureID,
     facture_produit.nombre AS productNumber,
     facture_produit.nombre * (produits.price + (produits.price * produits.tva) / 100) AS productTTC
     FROM factures, produits, facture_produit 

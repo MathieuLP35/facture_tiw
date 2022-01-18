@@ -58,13 +58,23 @@ switch ($_GET['action']) {
         print_view('factures/list', ['factures' => $factures, 'clients' => $clients]);
     break;
 
-    // Ajouter des produits à une facture
+    // Ajouter un produit d'une facture
     case 'addProd':
         if (!empty($_POST['fid']) && !empty($_POST['produit-facture']) && !empty($_POST['qty-produit-facture'])) {
             addProduct_facture(intval($_POST['fid']), intval($_POST['produit-facture']), floatval($_POST['qty-produit-facture']));
             header('Location: /?data=facture&action=list', true, 301);
         } else {
             die('Vous avez pas renseigner tout les champs obligatoire !');
+        }
+    break;
+
+    // Supprimer un produits d'une facture
+    case 'deleteProd':
+        if(!empty($_GET['id']) & !empty($_GET['fid'])){
+            deleteProduct_facture(intval($_GET['id']), intval($_GET['fid']));
+            header('Location: /?data=facture&action=view&fid='.$_GET['fid'], true, 301);
+        } else {
+            die('L\'identifiant produit est obligatoire');
         }
     break;
 
